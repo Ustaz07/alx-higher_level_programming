@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Define a class Square that defines a square by based on 4-square.py."""
+"""Define a class Square that defines a square based on 4-square.py."""
 
 
 class Square:
@@ -46,7 +46,7 @@ class Square:
         Returns:
             float or int: The area of the square.
         """
-        return self.__size**2
+        return self.__size ** 2
 
     def __lt__(self, other):
         """Check if the area of the square is less than the other.
