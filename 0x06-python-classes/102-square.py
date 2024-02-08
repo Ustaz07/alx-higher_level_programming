@@ -46,7 +46,7 @@ class Square:
         Returns:
             float or int: The area of the square.
         """
-        return self.__size ** 2
+        return self.__size**2
 
     def __lt__(self, other):
         """Check if the area of the square is less than the other.
