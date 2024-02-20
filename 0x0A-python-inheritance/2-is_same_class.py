@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # 2-is_same_class.py
-# [Shamsuddeen Abdullahi] <[shamsutukor@gmail.com]>
+# Shamsuddeen Abdullahi <shamsutukor@gmail.com>
 
 """
 Defines a function for checking if an object is exactly an instance of a given class.
