@@ -2,11 +2,6 @@
 
 const fs = require('fs');
 
-if (process.argv.length !== 5) {
-  console.error('Usage: ./102-concat.js fileA fileB fileC');
-  process.exit(1);
-}
-
 const fileA = process.argv[2];
 const fileB = process.argv[3];
 const fileC = process.argv[4];
