@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script that takes in an argument and displays all values in the
+script that takes in an argument and displays all values in the
 states table of hbtn_0e_0_usa where name matches the argument.
 """
 
@@ -9,36 +9,23 @@ import sys
 
 
 if __name__ == '__main__':
-    # Connect to MySQL database
+
     db = MySQLdb.connect(
         host='localhost',
         user=sys.argv[1],
         passwd=sys.argv[2],
         db=sys.argv[3],
         port=3306
-    )
-
-    # Get the state name to search for
+        )
     state_name = sys.argv[4]
 
-    # Create cursor object
     cur = db.cursor()
+    cur.execute("SELECT * FROM states WHERE name LIKE BINARY '%{}%'\
+    ORDER BY states.id ASC".format(state_name))
+    table = cur.fetchall()
 
-    # Execute SQL query to select states matching the provided name
-    query = "SELECT * FROM states WHERE BINARY name = %s ORDER BY id ASC"
-    cur.execute(query, (state_name,))
+    for row in table:
+        print(row)
 
-    # Fetch all rows
-    rows = cur.fetchall()
-
-    # Check if any rows were found
-    if not rows:
-        print("No records found.")
-    else:
-        # Print the selected states
-        for row in rows:
-            print(row)
-
-    # Close cursor and database connection
     cur.close()
     db.close()
