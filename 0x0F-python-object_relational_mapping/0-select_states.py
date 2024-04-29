@@ -6,6 +6,7 @@ Script that lists all states from the database hbtn_0e_0_usa.
 import sys
 import MySQLdb
 
+
 def get_states(username, password, database):
     """
     Retrieves and prints all states from the specified database.
@@ -44,6 +45,7 @@ def get_states(username, password, database):
         # Close cursor and database connection
         cursor.close()
         db.close()
+
 
 if __name__ == "__main__":
     # Check if correct number of arguments is provided
