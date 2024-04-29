@@ -35,8 +35,10 @@ if __name__ == '__main__':
     result = cur.fetchone()
 
     # Print cities if result is not None
-    if result:
+    if result and result[0]:
         print(result[0])
+    else:
+        print("")
 
     # Close cursor and database connection
     cur.close()
