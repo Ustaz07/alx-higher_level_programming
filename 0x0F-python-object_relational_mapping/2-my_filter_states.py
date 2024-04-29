@@ -25,15 +25,19 @@ if __name__ == '__main__':
     cur = db.cursor()
 
     # Execute SQL query to select states matching the provided name
-    query = "SELECT * FROM states WHERE name LIKE BINARY '%{}%' ORDER BY id ASC".format(state_name)
-    cur.execute(query)
+    query = "SELECT * FROM states WHERE BINARY name = %s ORDER BY id ASC"
+    cur.execute(query, (state_name,))
 
     # Fetch all rows
     rows = cur.fetchall()
 
-    # Print the selected states
-    for row in rows:
-        print(row)
+    # Check if any rows were found
+    if not rows:
+        print("No records found.")
+    else:
+        # Print the selected states
+        for row in rows:
+            print(row)
 
     # Close cursor and database connection
     cur.close()
