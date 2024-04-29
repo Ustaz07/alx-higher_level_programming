@@ -1,20 +1,34 @@
-# model_state.py
+#!/usr/bin/python3
+"""
+Script that lists all cities of a specific state from the database hbtn_0e_4_usa
+"""
 
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
+import sys
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from model_state import Base, State
 
-Base = declarative_base()
+if __name__ == '__main__':
+    # Connect to MySQL database
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
+                           format(sys.argv[1], sys.argv[2], sys.argv[3]),
+                           pool_pre_ping=True)
 
-class State(Base):
-    __tablename__ = 'states'
-
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    name = Column(String(128), nullable=False)
-
-if __name__ == "__main__":
-    # Connect to the MySQL server running on localhost at port 3306
-    # Replace 'username', 'password', and 'database_name' with your MySQL credentials
-    engine = create_engine('mysql+mysqldb://username:password@localhost:3306/database_name', pool_pre_ping=True)
-    
-    # WARNING: Import all classes that inherit from Base before calling Base.metadata.create_all(engine)
+    # Create all tables in the engine
     Base.metadata.create_all(engine)
+
+    # Create a session
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    # Check if the state exists
+    state = session.query(State).filter_by(name=sys.argv[4]).first()
+    if state:
+        cities = session.query(State, City).join(City).filter(State.name == sys.argv[4]).all()
+        for city in cities:
+            print(city[1].name)
+    else:
+        print("")
+
+    # Close the session
+    session.close()
