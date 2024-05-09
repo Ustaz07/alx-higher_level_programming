@@ -6,4 +6,4 @@
 response=$(curl -sI "$1" | grep -i "Content-Length" | awk '{print $2}')
 
 # Display the size of the response body
-echo "$response"
+echo "Response Body Size: $response bytes"
