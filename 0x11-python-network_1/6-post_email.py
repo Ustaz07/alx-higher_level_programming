@@ -14,5 +14,5 @@ if __name__ == "__main__":
     response = requests.post(url, data=payload)
     
     # Extract email from response body
-    email_response = response.text.split("Email: ")[1].strip()
-    print("Your email is:", email_response)
+    email_response = response.text.split(": ")[1].strip()
+    print(email_response)
