@@ -8,6 +8,10 @@ import requests
 import sys
 
 if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python3 script.py <repository_name> <owner_name>")
+        sys.exit(1)
+
     repo_name = sys.argv[1]
     owner_name = sys.argv[2]
     url = f'https://api.github.com/repos/{owner_name}/{repo_name}/commits'
@@ -20,4 +24,4 @@ if __name__ == "__main__":
             author_name = commit['commit']['author']['name']
             print(f"{sha}: {author_name}")
     else:
-        print("Error:", response.status_code)
+        print(f"Error: {response.status_code}")
