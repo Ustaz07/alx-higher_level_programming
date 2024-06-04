@@ -1,18 +1,29 @@
-#!/usr/bin/node
-
+const request = require('request');
 const fs = require('fs');
-const filePath = process.argv[2];
-const content = process.argv[3];
 
-if (!filePath || !content) {
-  console.error('Error: Missing arguments. Usage: ./1-writeme.js <file path> <string to write>');
-  process.exit(1);
+// Function to fetch data from a URL and write it to a file
+function fetchDataAndWriteToFile(url, filePath) {
+  return new Promise((resolve, reject) => {
+    request(url, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else {
+        fs.writeFile(filePath, body, 'utf8', err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
 }
 
-fs.writeFile(filePath, content, 'utf8', (err) => {
-  if (err) {
-    console.error(`Error writing to file: ${err.message}`);
-    return;
-  }
-  console.log(`File written successfully: ${filePath}`);
-});
+// Usage example
+const url = 'https://example.com';
+const filePath = 'example.html';
+
+fetchDataAndWriteToFile(url, filePath)
+  .then(() => console.log('File written successfully'))
+  .catch(error => console.error('Error:', error));
